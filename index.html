@@ -118,115 +118,22 @@
       border: none;
       padding: 0;
       cursor: pointer;
-      position: relative;
       flex-shrink: 0;
-    }
-
-    /* Each icon is a positioned box; layers are absolute inside */
-    .icon-layer {
-      position: absolute;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-      object-fit: contain;
-      pointer-events: none;
-    }
-
-    /* Centered+rotated layer helper */
-    .icon-center {
-      position: absolute;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-    .icon-center img {
       display: block;
-      pointer-events: none;
     }
 
-    /* ── ATH  100×120 ── */
-    .icon-ath {
-      width: 100px;
-      height: 120px; /* 100 × (120/100) */
-    }
-    .icon-ath .layer-inner {
-      position: absolute;
-      top: 10%; left: 12%; right: 12%; bottom: 9.17%;
-    }
-
-    /* ── EST  container 102px, proportional height ── */
-    .icon-est {
-      width: 102px;
-      height: 70px; /* 102 × (73/107) */
-    }
-    /* outer: inset -12.5% top/bottom, -4.15% left/right, rotated 5.28deg */
-    .icon-est .layer-outer {
-      top: -12.5%; left: -4.15%; right: -4.15%; bottom: -12.5%;
-      transform: rotate(5.28deg);
-    }
-    /* inner: inset -7% top/bottom, ~0% left/right, rotated 5.28deg */
-    .icon-est .layer-inner {
-      top: -7%; left: -0.81%; right: -0.04%; bottom: -6.97%;
-      transform: rotate(5.28deg);
-    }
-
-    /* ── WRITE  150×108 ── */
-    .icon-write {
-      width: 150px;
-      height: 108px; /* 150 × (111/154) */
-    }
-
-    /* ── ONAIR  container 140px, proportional height ── */
-    .icon-onair {
-      width: 140px;
-      height: 87px; /* 140 × (89/143) */
-    }
-    /* outer: inset -7.8% top/bottom, -2.55% left/right, rotated 3deg */
-    .icon-onair .layer-outer {
-      top: -7.8%; left: -2.48%; right: -2.55%; bottom: -7.71%;
-      transform: rotate(3deg);
-    }
-    /* inner: inset ~0% top/bottom, 8.09-8.3% left/right, rotated 3deg */
-    .icon-onair .layer-inner {
-      top: -0.36%; left: 8.09%; right: 8.3%; bottom: 0.05%;
-      transform: rotate(3deg);
-    }
-
-    /* ── FOLDER  container 114px, proportional height ── */
-    .icon-folder {
-      width: 114px;
-      height: 96px; /* 114 × (97/115) */
-    }
-    /* tab: inset -5.35% top, 4.63% left, 4.66% right, 71.25% bottom, rotated -3deg */
-    .icon-folder .layer-outer {
-      top: -5.35%; left: 4.63%; right: 4.66%; bottom: 71.25%;
-      transform: rotate(-3deg);
-    }
-    /* body: 19.1% from top (18.53/97), left/right slightly negative, rotated -3deg */
-    .icon-folder .layer-inner {
-      top: 19.1%; left: -0.41%; right: -2.85%; bottom: 0;
-      transform: rotate(-3deg);
-    }
-
-    /* The absolute layer divs (not img — they contain an img) */
-    .layer-outer,
-    .layer-inner {
-      position: absolute;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-    }
-    .layer-outer img,
-    .layer-inner img {
+    .nav-icon-btn img {
+      display: block;
       width: 100%;
-      height: 100%;
-      display: block;
+      height: auto;
       pointer-events: none;
     }
 
-    /* Nav row rotations (applied to the button wrapper) */
-    .nav-icon-btn[data-icon="est"]    { transform: rotate(-5.28deg); }
-    .nav-icon-btn[data-icon="onair"]  { transform: rotate(-3deg); }
-    .nav-icon-btn[data-icon="folder"] { transform: rotate(3deg); }
+    .icon-ath    { width: 100px; }
+    .icon-est    { width: 102px; }
+    .icon-write  { width: 150px; }
+    .icon-onair  { width: 140px; }
+    .icon-folder { width: 114px; }
 
     /* ── PANEL CONTAINER (viewport) ── */
     .panel-container {
@@ -339,85 +246,49 @@
     <!-- NAV ICONS -->
     <div class="nav-icons">
 
-      <!-- ATH: single bg + inner overlay -->
-      <button class="nav-icon-btn icon-ath" data-section="ath" data-icon="ath" title="Athens">
-        <img class="icon-layer"
-          src="assets/ath-default.svg"
+      <!-- ATH -->
+      <button class="nav-icon-btn icon-ath" data-section="ath" title="Athens">
+        <img src="assets/ath-default.svg"
           data-default="assets/ath-default.svg"
-          data-hover="assets/ath-bg-hover.svg"
+          data-hover="assets/ath-hover.svg"
           data-selected="assets/ath-selected.svg"
-          alt="" />
-        <div class="layer-inner">
-          <img src="assets/ath-inner-default.svg"
-            data-default="assets/ath-inner-default.svg"
-            data-hover="assets/ath-inner-hover.svg"
-            data-selected="assets/ath-inner-selected.svg"
-            alt="" />
-        </div>
+          alt="Athens" />
       </button>
 
-      <!-- EST: two rotated layers -->
-      <button class="nav-icon-btn icon-est" data-section="est" data-icon="est" title="Est. 2017">
-        <div class="layer-outer">
-          <img src="assets/est-outer-default.svg"
-            data-default="assets/est-outer-default.svg"
-            data-hover="assets/est-outer-hover.svg"
-            data-selected="assets/est-outer-selected.svg"
-            alt="" />
-        </div>
-        <div class="layer-inner">
-          <img src="assets/est-inner.svg"
-            data-default="assets/est-inner.svg"
-            data-hover="assets/est-inner-hover.svg"
-            data-selected="assets/est-inner.svg"
-            alt="" />
-        </div>
+      <!-- EST -->
+      <button class="nav-icon-btn icon-est" data-section="est" title="Est. 2017">
+        <img src="assets/est-default.svg"
+          data-default="assets/est-default.svg"
+          data-hover="assets/est-hover.svg"
+          data-selected="assets/est-selected.svg"
+          alt="Est. 2017" />
       </button>
 
-      <!-- WRITE: single flat image, 3 states -->
-      <button class="nav-icon-btn icon-write" data-section="write" data-icon="write" title="Writing">
-        <img class="icon-layer"
-          src="assets/write-default.svg"
+      <!-- WRITE -->
+      <button class="nav-icon-btn icon-write" data-section="write" title="Writing">
+        <img src="assets/write-default.svg"
           data-default="assets/write-default.svg"
           data-hover="assets/write-hover.svg"
           data-selected="assets/write-selected.svg"
-          alt="" />
+          alt="Writing" />
       </button>
 
-      <!-- ONAIR: two rotated layers -->
-      <button class="nav-icon-btn icon-onair" data-section="onair" data-icon="onair" title="Speaking">
-        <div class="layer-outer">
-          <img src="assets/onair-outer-default.svg"
-            data-default="assets/onair-outer-default.svg"
-            data-hover="assets/onair-outer-hover.svg"
-            data-selected="assets/onair-outer-selected.svg"
-            alt="" />
-        </div>
-        <div class="layer-inner">
-          <img src="assets/onair-inner.svg"
-            data-default="assets/onair-inner.svg"
-            data-hover="assets/onair-inner.svg"
-            data-selected="assets/onair-inner.svg"
-            alt="" />
-        </div>
+      <!-- ON AIR -->
+      <button class="nav-icon-btn icon-onair" data-section="onair" title="Speaking">
+        <img src="assets/onair-default.svg"
+          data-default="assets/onair-default.svg"
+          data-hover="assets/onair-hover.svg"
+          data-selected="assets/onair-selected.svg"
+          alt="On Air" />
       </button>
 
-      <!-- FOLDER: two rotated layers -->
-      <button class="nav-icon-btn icon-folder" data-section="portfolio" data-icon="folder" title="Portfolio">
-        <div class="layer-outer">
-          <img src="assets/folder-outer-default.svg"
-            data-default="assets/folder-outer-default.svg"
-            data-hover="assets/folder-outer-hover.svg"
-            data-selected="assets/folder-outer-selected.svg"
-            alt="" />
-        </div>
-        <div class="layer-inner">
-          <img src="assets/folder-inner-default.svg"
-            data-default="assets/folder-inner-default.svg"
-            data-hover="assets/folder-inner-hover.svg"
-            data-selected="assets/folder-inner-selected.svg"
-            alt="" />
-        </div>
+      <!-- FOLDER / PORTFOLIO -->
+      <button class="nav-icon-btn icon-folder" data-section="portfolio" title="Portfolio">
+        <img src="assets/folder-default.svg"
+          data-default="assets/folder-default.svg"
+          data-hover="assets/folder-hover.svg"
+          data-selected="assets/folder-selected.svg"
+          alt="Portfolio" />
       </button>
 
     </div>
