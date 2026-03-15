@@ -79,11 +79,6 @@
       color: #000;
     }
 
-    .hero-divider {
-      width: 100%;
-      height: 1px;
-    }
-
     .hero-divider img {
       width: 100%;
       display: block;
@@ -110,7 +105,7 @@
       line-height: 1.7;
     }
 
-    /* NAV ICONS */
+    /* ── NAV ICONS ── */
     .nav-icons {
       display: flex;
       gap: 14px;
@@ -124,332 +119,169 @@
       cursor: pointer;
       position: relative;
       flex-shrink: 0;
-      transition: transform 0.15s ease;
     }
 
-    .nav-icon-btn:hover {
-      transform: scale(1.05);
+    /* Each icon is a positioned box; layers are absolute inside */
+    .icon-layer {
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      object-fit: contain;
+      pointer-events: none;
     }
 
-    .nav-icon-btn.active {
-      transform: scale(1.0);
+    /* Centered+rotated layer helper */
+    .icon-center {
+      position: absolute;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .icon-center img {
+      display: block;
+      pointer-events: none;
     }
 
-    /* ATH */
-    .nav-icon-btn[data-section="ath"] {
+    /* ── ATH  100×120 ── */
+    .icon-ath {
       width: 100px;
       height: 120px;
     }
+    .icon-ath .layer-inner {
+      position: absolute;
+      top: 10%; left: 12%; right: 12%; bottom: 9.17%;
+    }
 
-    /* EST */
-    .nav-icon-btn[data-section="est"] {
+    /* ── EST  107×73  (rotated -5.28deg in nav row) ── */
+    .icon-est {
       width: 107px;
       height: 73px;
-      transform: rotate(-5.28deg);
     }
-    .nav-icon-btn[data-section="est"]:hover {
-      transform: rotate(-5.28deg) scale(1.05);
+    /* outer: inset -12.5% top/bottom, -4.15% left/right, rotated 5.28deg */
+    .icon-est .layer-outer {
+      top: -12.5%; left: -4.15%; right: -4.15%; bottom: -12.5%;
+      transform: rotate(5.28deg);
     }
-    .nav-icon-btn[data-section="est"].active {
-      transform: rotate(-5.28deg);
+    /* inner: inset -7% top/bottom, ~0% left/right, rotated 5.28deg */
+    .icon-est .layer-inner {
+      top: -7%; left: -0.81%; right: -0.04%; bottom: -6.97%;
+      transform: rotate(5.28deg);
     }
 
-    /* WRITE */
-    .nav-icon-btn[data-section="write"] {
+    /* ── WRITE  154×111 ── */
+    .icon-write {
       width: 154px;
       height: 111px;
     }
 
-    /* ON AIR */
-    .nav-icon-btn[data-section="onair"] {
+    /* ── ONAIR  143×89  (rotated -3deg in nav row) ── */
+    .icon-onair {
       width: 143px;
       height: 89px;
-      transform: rotate(-3deg);
     }
-    .nav-icon-btn[data-section="onair"]:hover {
-      transform: rotate(-3deg) scale(1.05);
+    /* outer: inset -7.8% top/bottom, -2.55% left/right, rotated 3deg */
+    .icon-onair .layer-outer {
+      top: -7.8%; left: -2.48%; right: -2.55%; bottom: -7.71%;
+      transform: rotate(3deg);
     }
-    .nav-icon-btn[data-section="onair"].active {
-      transform: rotate(-3deg);
+    /* inner: inset ~0% top/bottom, 8.09-8.3% left/right, rotated 3deg */
+    .icon-onair .layer-inner {
+      top: -0.36%; left: 8.09%; right: 8.3%; bottom: 0.05%;
+      transform: rotate(3deg);
     }
 
-    /* FOLDER */
-    .nav-icon-btn[data-section="portfolio"] {
+    /* ── FOLDER  115×97  (rotated 3deg in nav row) ── */
+    .icon-folder {
       width: 115px;
       height: 97px;
-      transform: rotate(3deg);
     }
-    .nav-icon-btn[data-section="portfolio"]:hover {
-      transform: rotate(3deg) scale(1.05);
+    /* tab: inset -5.35% top, 4.63% left, 4.66% right, 71.25% bottom, rotated -3deg */
+    .icon-folder .layer-outer {
+      top: -5.35%; left: 4.63%; right: 4.66%; bottom: 71.25%;
+      transform: rotate(-3deg);
     }
-    .nav-icon-btn[data-section="portfolio"].active {
-      transform: rotate(3deg);
+    /* body: top=18.53px, left/right slightly negative, rotated -3deg */
+    .icon-folder .layer-inner {
+      top: 18.53px; left: -0.41%; right: -2.85%; bottom: 0;
+      transform: rotate(-3deg);
     }
 
-    .nav-icon-btn img {
+    /* The absolute layer divs (not img — they contain an img) */
+    .layer-outer,
+    .layer-inner {
+      position: absolute;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+    }
+    .layer-outer img,
+    .layer-inner img {
       width: 100%;
       height: 100%;
-      object-fit: contain;
       display: block;
-      position: absolute;
-      top: 0; left: 0;
+      pointer-events: none;
     }
 
-    /* ATH icon layers */
-    .ath-bg, .ath-icon-img {
-      position: absolute;
-      top: 0; left: 0;
-      width: 100%; height: 100%;
-    }
+    /* Nav row rotations (applied to the button wrapper) */
+    .nav-icon-btn[data-icon="est"]    { transform: rotate(-5.28deg); }
+    .nav-icon-btn[data-icon="onair"]  { transform: rotate(-3deg); }
+    .nav-icon-btn[data-icon="folder"] { transform: rotate(3deg); }
 
-    .ath-border {
-      position: absolute;
-      top: 10%; left: 12%;
-      right: 12%; bottom: 9.17%;
-      border: 2px solid #000;
-      border-radius: 2px;
-    }
-
-    /* EST icon layers */
-    .est-bg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
-    .est-union { position: absolute; top: 4.69%; left: 2.94%; right: 3.71%; bottom: 4.69%; }
-    .est-year { position: absolute; top: 47.96%; left: 22.55%; right: 23.44%; bottom: 24.63%; }
-    .est-text { position: absolute; top: 25%; left: 37.25%; right: 37.8%; bottom: 62.51%; }
-
-    /* WRITE icon layers */
-    .write-bg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
-    .write-pen { position: absolute; top: 15.33%; left: 20.08%; right: 6.06%; bottom: 20.63%; }
-
-    /* ON AIR icon layers */
-    .onair-bg { position: absolute; top: 0; left: 0; width: 100%; height: 100%; }
-    .onair-mic { position: absolute; top: 24.34%; left: 17.31%; right: 38.09%; bottom: 20.79%; }
-    .onair-text-wrap {
-      position: absolute;
-      top: 19%; left: 81.52%; right: 10.57%; bottom: 16.37%;
-      display: flex; align-items: center; justify-content: center;
-    }
-    .onair-text-inner {
-      transform: rotate(-90deg);
-      width: 53px; height: 11px;
-    }
-    .onair-text-inner img { width: 100%; height: 100%; }
-    .onair-line-top { position: absolute; top: 7.71%; left: 11.44%; right: 11.95%; height: 2px; }
-    .onair-line-top img { width: 100%; height: auto; }
-    .onair-line-bot { position: absolute; bottom: 8.14%; left: 11.44%; right: 11.95%; height: 2px; }
-    .onair-line-bot img { width: 100%; height: auto; }
-
-    /* FOLDER icon layers */
-    .folder-tab { position: absolute; top: 0; left: 5.45%; right: 5%; bottom: 76.63%; }
-    .folder-body { position: absolute; top: 26.18%; left: 0; right: 0; bottom: 0; }
-
-    /* SECTION PANELS */
+    /* ── SECTION PANELS ── */
     .section-panel {
       display: none;
       border-left: 4px solid;
       border-radius: 0 8px 8px 0;
       padding: 24px;
-      overflow: hidden;
     }
-
     .section-panel.visible {
       display: block;
       animation: slideDown 0.2s ease;
     }
-
     @keyframes slideDown {
       from { opacity: 0; transform: translateY(-8px); }
-      to { opacity: 1; transform: translateY(0); }
+      to   { opacity: 1; transform: translateY(0); }
     }
 
-    /* ATH panel */
-    .panel-ath {
-      border-color: #00c8ff;
-      background: rgba(0, 200, 255, 0.1);
-    }
+    .panel-ath      { border-color: #00c8ff; background: rgba(0,200,255,.1); }
+    .panel-est      { border-color: #fff200; background: rgba(255,242,0,.1); }
+    .panel-write    { border-color: #00ff37; background: rgba(0,255,55,.1); }
+    .panel-onair    { border-color: #ff00a2; background: rgba(255,0,162,.1); }
+    .panel-portfolio{ border-color: #fff200; background: rgba(255,242,0,.1); }
 
-    .panel-ath .panel-text {
-      font-size: 15px;
-      color: #000;
-      line-height: 24px;
-    }
+    /* Panel content styles */
+    .panel-text { font-size: 15px; color: #000; line-height: 24px; }
 
-    /* EST panel */
-    .panel-est {
-      border-color: #fff200;
-      background: rgba(255, 242, 0, 0.1);
-    }
+    .cv-list { display: flex; flex-direction: column; gap: 16px; }
+    .cv-row  { display: flex; gap: 16px; align-items: center; }
+    .cv-role    { font-size: 14px; color: #000; white-space: nowrap; }
+    .cv-company { font-size: 14px; font-weight: 700; color: #000; white-space: nowrap; }
+    .cv-label   { background: #fff; border-radius: 4px; padding: 5px 8px 7px; font-size: 12px; color: #000; white-space: nowrap; }
 
-    .cv-list {
-      display: flex;
-      flex-direction: column;
-      gap: 16px;
-    }
+    .write-header { display: flex; gap: 8px; align-items: center; margin-bottom: 16px; font-size: 15px; color: #000; line-height: 24px; }
+    .write-header img { width: 24px; height: 24px; }
+    .write-header strong { font-weight: 700; }
 
-    .cv-row {
-      display: flex;
-      gap: 16px;
-      align-items: center;
-    }
+    .articles-label { display: inline-flex; gap: 4px; align-items: center; background: #fff; border-radius: 4px; padding: 5px 8px 7px; font-size: 12px; color: #000; margin-bottom: 8px; }
+    .articles-label img { width: 16px; height: 16px; }
 
-    .cv-role {
-      font-size: 14px;
-      color: #000;
-      white-space: nowrap;
-    }
+    .article-link { display: flex; gap: 4px; align-items: center; font-size: 15px; color: #000; line-height: 24px; text-decoration: none; margin-bottom: 4px; }
+    .article-link img { width: 16px; height: 16px; flex-shrink: 0; }
 
-    .cv-company {
-      font-size: 14px;
-      font-weight: 700;
-      color: #000;
-      white-space: nowrap;
-    }
-
-    .cv-label {
-      background: #fff;
-      border-radius: 4px;
-      padding: 5px 8px 7px;
-      font-size: 12px;
-      color: #000;
-      white-space: nowrap;
-    }
-
-    /* WRITE panel */
-    .panel-write {
-      border-color: #00ff37;
-      background: rgba(0, 255, 55, 0.1);
-    }
-
-    .write-header {
-      display: flex;
-      gap: 8px;
-      align-items: center;
-      margin-bottom: 16px;
-    }
-
-    .write-header img {
-      width: 24px;
-      height: 24px;
-    }
-
-    .write-header p {
-      font-size: 15px;
-      color: #000;
-      line-height: 24px;
-    }
-
-    .write-header p strong {
-      font-weight: 700;
-    }
-
-    .articles-label {
-      display: inline-flex;
-      gap: 4px;
-      align-items: center;
-      background: #fff;
-      border-radius: 4px;
-      padding: 5px 8px 7px;
-      font-size: 12px;
-      color: #000;
-      margin-bottom: 8px;
-    }
-
-    .articles-label img {
-      width: 16px;
-      height: 16px;
-    }
-
-    .article-link {
-      display: flex;
-      gap: 4px;
-      align-items: center;
-      font-size: 15px;
-      color: #000;
-      line-height: 24px;
-      text-decoration: none;
-      margin-bottom: 4px;
-    }
-
-    .article-link img {
-      width: 16px;
-      height: 16px;
-      flex-shrink: 0;
-    }
-
-    /* SPEAK panel */
-    .panel-speak {
-      border-color: #ff00a2;
-      background: rgba(255, 0, 162, 0.1);
-    }
-
-    /* PORTFOLIO panel */
-    .panel-portfolio {
-      border-color: #fff200;
-      background: rgba(255, 242, 0, 0.1);
-    }
-
-    .speak-content, .portfolio-content {
-      display: flex;
-      gap: 40px;
-      align-items: center;
-    }
-
-    .speak-img {
-      width: 262px;
-      height: 147px;
-      border-radius: 8px;
-      object-fit: cover;
-      border: 1px solid #d9d9d9;
-      flex-shrink: 0;
-    }
-
-    .speak-info {
-      display: flex;
-      flex-direction: column;
-      gap: 16px;
-    }
-
-    .speak-title {
-      font-size: 15px;
-      color: #000;
-      line-height: normal;
-    }
-
-    .speak-venue {
-      display: flex;
-      gap: 8px;
-      align-items: center;
-      font-size: 15px;
-      color: #000;
-    }
-
-    .speak-venue img {
-      width: 24px;
-      height: 24px;
-      flex-shrink: 0;
-    }
-
-    .vod-btn {
-      display: inline-flex;
-      gap: 4px;
-      align-items: center;
-      background: #fff;
-      border-radius: 4px;
-      padding: 5px 8px 7px;
-      font-size: 12px;
-      color: #000;
-      text-decoration: none;
-    }
-
-    .vod-btn img {
-      width: 16px;
-      height: 16px;
-    }
+    .speak-content { display: flex; gap: 40px; align-items: center; }
+    .speak-img { width: 262px; height: 147px; border-radius: 8px; object-fit: cover; border: 1px solid #d9d9d9; flex-shrink: 0; }
+    .speak-info { display: flex; flex-direction: column; gap: 16px; }
+    .speak-title { font-size: 15px; color: #000; }
+    .speak-venue { display: flex; gap: 4px; align-items: center; font-size: 15px; color: #000; }
+    .speak-venue img { width: 24px; height: 24px; }
+    .vod-btn { display: inline-flex; gap: 4px; align-items: center; background: #fff; border-radius: 4px; padding: 5px 8px 7px; font-size: 12px; color: #000; text-decoration: none; }
+    .vod-btn img { width: 16px; height: 16px; }
 
     @media (max-width: 520px) {
       .card { padding: 32px 24px; }
       .hero { flex-direction: column; gap: 24px; }
       .nav-icons { flex-wrap: wrap; justify-content: center; }
-      .speak-content, .portfolio-content { flex-direction: column; gap: 20px; }
+      .speak-content { flex-direction: column; gap: 20px; }
       .speak-img { width: 100%; height: auto; }
     }
   </style>
@@ -495,44 +327,85 @@
     <!-- NAV ICONS -->
     <div class="nav-icons">
 
-      <!-- ATH -->
-      <button class="nav-icon-btn" data-section="ath" title="Athens" aria-label="Where I'm from">
-        <img class="ath-bg" src="assets/ath-default.svg" alt="" data-default="assets/ath-default.svg" data-selected="assets/ath-selected.svg" />
-        <img class="ath-icon-img" src="assets/ath-icon.svg" alt="" data-default="assets/ath-icon.svg" data-selected="assets/ath-icon-selected.svg" />
-        <div class="ath-border"></div>
-      </button>
-
-      <!-- EST -->
-      <button class="nav-icon-btn" data-section="est" title="Est. 2017" aria-label="Experience">
-        <img class="est-bg" src="assets/est-default.svg" alt="" data-default="assets/est-default.svg" data-selected="assets/est-selected.svg" />
-        <img class="est-union" src="assets/est-union.svg" alt="" />
-        <img class="est-year" src="assets/est-2017.svg" alt="" />
-        <img class="est-text" src="assets/est-text.svg" alt="" />
-      </button>
-
-      <!-- WRITE -->
-      <button class="nav-icon-btn" data-section="write" title="Writing" aria-label="Writing">
-        <img class="write-bg" src="assets/write-default.svg" alt="" data-default="assets/write-default.svg" data-selected="assets/write-selected.svg" />
-        <img class="write-pen" src="assets/write-pen.svg" alt="" />
-      </button>
-
-      <!-- ON AIR -->
-      <button class="nav-icon-btn" data-section="onair" title="Speaking" aria-label="Speaking">
-        <img class="onair-bg" src="assets/onair-default.svg" alt="" data-default="assets/onair-default.svg" data-selected="assets/onair-selected.svg" />
-        <img class="onair-mic" src="assets/onair-mic.svg" alt="" />
-        <div class="onair-text-wrap">
-          <div class="onair-text-inner">
-            <img src="assets/onair-text.svg" alt="ON AIR" />
-          </div>
+      <!-- ATH: single bg + inner overlay -->
+      <button class="nav-icon-btn icon-ath" data-section="ath" data-icon="ath" title="Athens">
+        <img class="icon-layer"
+          src="assets/ath-default.svg"
+          data-default="assets/ath-default.svg"
+          data-hover="assets/ath-bg-hover.svg"
+          data-selected="assets/ath-selected.svg"
+          alt="" />
+        <div class="layer-inner">
+          <img src="assets/ath-inner-default.svg"
+            data-default="assets/ath-inner-default.svg"
+            data-hover="assets/ath-inner-hover.svg"
+            data-selected="assets/ath-inner-selected.svg"
+            alt="" />
         </div>
-        <div class="onair-line-top"><img src="assets/onair-line.svg" alt="" /></div>
-        <div class="onair-line-bot"><img src="assets/onair-line.svg" alt="" /></div>
       </button>
 
-      <!-- PORTFOLIO / FOLDER -->
-      <button class="nav-icon-btn" data-section="portfolio" title="Portfolio" aria-label="Portfolio">
-        <img class="folder-tab" src="assets/folder-tab.svg" alt="" data-default="assets/folder-tab.svg" data-selected="assets/folder-tab-selected.svg" />
-        <img class="folder-body" src="assets/folder-body.svg" alt="" data-default="assets/folder-body.svg" data-selected="assets/folder-body-selected.svg" />
+      <!-- EST: two rotated layers -->
+      <button class="nav-icon-btn icon-est" data-section="est" data-icon="est" title="Est. 2017">
+        <div class="layer-outer">
+          <img src="assets/est-outer-default.svg"
+            data-default="assets/est-outer-default.svg"
+            data-hover="assets/est-outer-hover.svg"
+            data-selected="assets/est-outer-selected.svg"
+            alt="" />
+        </div>
+        <div class="layer-inner">
+          <img src="assets/est-inner.svg"
+            data-default="assets/est-inner.svg"
+            data-hover="assets/est-inner-hover.svg"
+            data-selected="assets/est-inner.svg"
+            alt="" />
+        </div>
+      </button>
+
+      <!-- WRITE: single flat image, 3 states -->
+      <button class="nav-icon-btn icon-write" data-section="write" data-icon="write" title="Writing">
+        <img class="icon-layer"
+          src="assets/write-default.svg"
+          data-default="assets/write-default.svg"
+          data-hover="assets/write-hover.svg"
+          data-selected="assets/write-selected.svg"
+          alt="" />
+      </button>
+
+      <!-- ONAIR: two rotated layers -->
+      <button class="nav-icon-btn icon-onair" data-section="onair" data-icon="onair" title="Speaking">
+        <div class="layer-outer">
+          <img src="assets/onair-outer-default.svg"
+            data-default="assets/onair-outer-default.svg"
+            data-hover="assets/onair-outer-hover.svg"
+            data-selected="assets/onair-outer-selected.svg"
+            alt="" />
+        </div>
+        <div class="layer-inner">
+          <img src="assets/onair-inner.svg"
+            data-default="assets/onair-inner.svg"
+            data-hover="assets/onair-inner.svg"
+            data-selected="assets/onair-inner.svg"
+            alt="" />
+        </div>
+      </button>
+
+      <!-- FOLDER: two rotated layers -->
+      <button class="nav-icon-btn icon-folder" data-section="portfolio" data-icon="folder" title="Portfolio">
+        <div class="layer-outer">
+          <img src="assets/folder-outer-default.svg"
+            data-default="assets/folder-outer-default.svg"
+            data-hover="assets/folder-outer-hover.svg"
+            data-selected="assets/folder-outer-selected.svg"
+            alt="" />
+        </div>
+        <div class="layer-inner">
+          <img src="assets/folder-inner-default.svg"
+            data-default="assets/folder-inner-default.svg"
+            data-hover="assets/folder-inner-hover.svg"
+            data-selected="assets/folder-inner-selected.svg"
+            alt="" />
+        </div>
       </button>
 
     </div>
@@ -546,7 +419,7 @@
       </div>
     </div>
 
-    <!-- SECTION: EST (Experience) -->
+    <!-- SECTION: EST -->
     <div class="section-panel panel-est" id="panel-est">
       <div class="cv-list">
         <div class="cv-row">
@@ -582,7 +455,7 @@
       <div class="write-header">
         <span>Find me on</span>
         <img src="assets/medium-icon.svg" alt="Medium" />
-        <p>Medium <strong>@fabriziaa</strong></p>
+        <span>Medium <strong>@fabriziaa</strong></span>
       </div>
       <div>
         <div class="articles-label">
@@ -600,8 +473,8 @@
       </div>
     </div>
 
-    <!-- SECTION: ON AIR (Speaking) -->
-    <div class="section-panel panel-speak" id="panel-onair">
+    <!-- SECTION: ON AIR -->
+    <div class="section-panel panel-onair" id="panel-onair">
       <div class="speak-content">
         <img class="speak-img" src="assets/image6.png" alt="Friends of Figma World Tour 2025" />
         <div class="speak-info">
@@ -614,8 +487,7 @@
             </div>
           </div>
           <a class="vod-btn" href="#" target="_blank" rel="noopener">
-            watch VOD
-            <img src="assets/arrow-out.svg" alt="" />
+            watch VOD <img src="assets/arrow-out.svg" alt="" />
           </a>
         </div>
       </div>
@@ -623,7 +495,7 @@
 
     <!-- SECTION: PORTFOLIO -->
     <div class="section-panel panel-portfolio" id="panel-portfolio">
-      <div class="portfolio-content">
+      <div class="speak-content">
         <img class="speak-img" src="assets/image6.png" alt="Portfolio" />
         <div class="speak-info">
           <div>
@@ -635,8 +507,7 @@
             </div>
           </div>
           <a class="vod-btn" href="#" target="_blank" rel="noopener">
-            watch VOD
-            <img src="assets/arrow-out.svg" alt="" />
+            watch VOD <img src="assets/arrow-out.svg" alt="" />
           </a>
         </div>
       </div>
@@ -647,28 +518,38 @@
   <script>
     const buttons = document.querySelectorAll('.nav-icon-btn');
 
+    function applyState(btn, state) {
+      btn.querySelectorAll('img[data-default]').forEach(img => {
+        img.src = img.dataset[state] || img.dataset.default;
+      });
+    }
+
     buttons.forEach(btn => {
+      // Hover in
+      btn.addEventListener('mouseenter', () => {
+        if (!btn.classList.contains('active')) applyState(btn, 'hover');
+      });
+      // Hover out
+      btn.addEventListener('mouseleave', () => {
+        if (!btn.classList.contains('active')) applyState(btn, 'default');
+      });
+
+      // Click to toggle active/selected
       btn.addEventListener('click', () => {
         const section = btn.dataset.section;
         const panel = document.getElementById('panel-' + section);
         const isActive = btn.classList.contains('active');
 
-        // Deactivate all
+        // Reset all
         buttons.forEach(b => {
           b.classList.remove('active');
-          // Reset swappable images
-          b.querySelectorAll('[data-default]').forEach(img => {
-            img.src = img.dataset.default;
-          });
+          applyState(b, 'default');
         });
         document.querySelectorAll('.section-panel').forEach(p => p.classList.remove('visible'));
 
         if (!isActive) {
           btn.classList.add('active');
-          // Swap to selected state images
-          btn.querySelectorAll('[data-default]').forEach(img => {
-            if (img.dataset.selected) img.src = img.dataset.selected;
-          });
+          applyState(btn, 'selected');
           if (panel) panel.classList.add('visible');
         }
       });
