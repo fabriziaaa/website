@@ -228,20 +228,33 @@
     .nav-icon-btn[data-icon="onair"]  { transform: rotate(-3deg); }
     .nav-icon-btn[data-icon="folder"] { transform: rotate(3deg); }
 
+    /* ── PANEL CONTAINER (viewport) ── */
+    .panel-container {
+      position: relative;
+      overflow: hidden;
+      height: 0;
+      transition: height 0.35s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+    .panel-container.open {
+      height: var(--panel-max-height);
+    }
+
     /* ── SECTION PANELS ── */
     .section-panel {
-      display: none;
+      position: absolute;
+      top: 0; left: 0; right: 0;
       border-left: 4px solid;
       border-radius: 0 8px 8px 0;
       padding: 24px;
+      opacity: 0;
+      transform: translateY(14px);
+      pointer-events: none;
+      transition: opacity 0.25s ease 0.05s, transform 0.28s ease 0.05s;
     }
     .section-panel.visible {
-      display: block;
-      animation: slideDown 0.2s ease;
-    }
-    @keyframes slideDown {
-      from { opacity: 0; transform: translateY(-8px); }
-      to   { opacity: 1; transform: translateY(0); }
+      opacity: 1;
+      transform: translateY(0);
+      pointer-events: auto;
     }
 
     .panel-ath      { border-color: #00c8ff; background: rgba(0,200,255,.1); }
@@ -409,6 +422,9 @@
 
     </div>
 
+    <!-- PANEL CONTAINER -->
+    <div class="panel-container" id="panel-container">
+
     <!-- SECTION: ATH -->
     <div class="section-panel panel-ath" id="panel-ath">
       <div class="panel-text">
@@ -512,44 +528,70 @@
       </div>
     </div>
 
+    </div><!-- /.panel-container -->
+
   </div>
 
   <script>
     const buttons = document.querySelectorAll('.nav-icon-btn');
+    const panelContainer = document.getElementById('panel-container');
+    const panels = document.querySelectorAll('.section-panel');
 
+    // ── Measure tallest panel and lock container height ──
+    // Temporarily expose all panels to get their true rendered height
+    panelContainer.style.height = 'auto';
+    panelContainer.style.overflow = 'visible';
+    panels.forEach(p => {
+      p.style.position = 'relative';
+      p.style.opacity = '0';
+      p.style.pointerEvents = 'none';
+    });
+
+    let maxH = 0;
+    panels.forEach(p => { maxH = Math.max(maxH, p.offsetHeight); });
+    panelContainer.style.setProperty('--panel-max-height', maxH + 'px');
+
+    // Restore
+    panels.forEach(p => {
+      p.style.position = '';
+      p.style.opacity = '';
+      p.style.pointerEvents = '';
+    });
+    panelContainer.style.height = '';
+    panelContainer.style.overflow = '';
+
+    // ── Icon state helper ──
     function applyState(btn, state) {
       btn.querySelectorAll('img[data-default]').forEach(img => {
         img.src = img.dataset[state] || img.dataset.default;
       });
     }
 
+    // ── Event listeners ──
     buttons.forEach(btn => {
-      // Hover in
       btn.addEventListener('mouseenter', () => {
         if (!btn.classList.contains('active')) applyState(btn, 'hover');
       });
-      // Hover out
       btn.addEventListener('mouseleave', () => {
         if (!btn.classList.contains('active')) applyState(btn, 'default');
       });
 
-      // Click to toggle active/selected
       btn.addEventListener('click', () => {
         const section = btn.dataset.section;
         const panel = document.getElementById('panel-' + section);
         const isActive = btn.classList.contains('active');
 
-        // Reset all
-        buttons.forEach(b => {
-          b.classList.remove('active');
-          applyState(b, 'default');
-        });
-        document.querySelectorAll('.section-panel').forEach(p => p.classList.remove('visible'));
+        // Reset all buttons and panels
+        buttons.forEach(b => { b.classList.remove('active'); applyState(b, 'default'); });
+        panels.forEach(p => p.classList.remove('visible'));
 
         if (!isActive) {
           btn.classList.add('active');
           applyState(btn, 'selected');
           if (panel) panel.classList.add('visible');
+          panelContainer.classList.add('open');
+        } else {
+          panelContainer.classList.remove('open');
         }
       });
     });
