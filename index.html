@@ -146,17 +146,17 @@
     /* ── ATH  100×120 ── */
     .icon-ath {
       width: 100px;
-      height: 120px;
+      height: 120px; /* 100 × (120/100) */
     }
     .icon-ath .layer-inner {
       position: absolute;
       top: 10%; left: 12%; right: 12%; bottom: 9.17%;
     }
 
-    /* ── EST  107×73  (rotated -5.28deg in nav row) ── */
+    /* ── EST  container 102px, proportional height ── */
     .icon-est {
-      width: 107px;
-      height: 73px;
+      width: 102px;
+      height: 70px; /* 102 × (73/107) */
     }
     /* outer: inset -12.5% top/bottom, -4.15% left/right, rotated 5.28deg */
     .icon-est .layer-outer {
@@ -169,16 +169,16 @@
       transform: rotate(5.28deg);
     }
 
-    /* ── WRITE  154×111 ── */
+    /* ── WRITE  150×108 ── */
     .icon-write {
-      width: 154px;
-      height: 111px;
+      width: 150px;
+      height: 108px; /* 150 × (111/154) */
     }
 
-    /* ── ONAIR  143×89  (rotated -3deg in nav row) ── */
+    /* ── ONAIR  container 140px, proportional height ── */
     .icon-onair {
-      width: 143px;
-      height: 89px;
+      width: 140px;
+      height: 87px; /* 140 × (89/143) */
     }
     /* outer: inset -7.8% top/bottom, -2.55% left/right, rotated 3deg */
     .icon-onair .layer-outer {
@@ -191,19 +191,19 @@
       transform: rotate(3deg);
     }
 
-    /* ── FOLDER  115×97  (rotated 3deg in nav row) ── */
+    /* ── FOLDER  container 114px, proportional height ── */
     .icon-folder {
-      width: 115px;
-      height: 97px;
+      width: 114px;
+      height: 96px; /* 114 × (97/115) */
     }
     /* tab: inset -5.35% top, 4.63% left, 4.66% right, 71.25% bottom, rotated -3deg */
     .icon-folder .layer-outer {
       top: -5.35%; left: 4.63%; right: 4.66%; bottom: 71.25%;
       transform: rotate(-3deg);
     }
-    /* body: top=18.53px, left/right slightly negative, rotated -3deg */
+    /* body: 19.1% from top (18.53/97), left/right slightly negative, rotated -3deg */
     .icon-folder .layer-inner {
-      top: 18.53px; left: -0.41%; right: -2.85%; bottom: 0;
+      top: 19.1%; left: -0.41%; right: -2.85%; bottom: 0;
       transform: rotate(-3deg);
     }
 
