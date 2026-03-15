@@ -39,7 +39,7 @@
 
     @media (min-width: 782px) {
       body { padding: 40px 120px; }
-      .card { padding: 60px; }
+      .card { padding: 60px; width: 704px; }
     }
 
     /* HERO */
@@ -551,16 +551,8 @@
       });
     }
 
-    // ── Card min-width: only on wide viewports ──
-    function updateMinWidth() {
-      if (window.innerWidth >= 782) {
-        const cardPadding = parseFloat(getComputedStyle(card).paddingLeft)
-                          + parseFloat(getComputedStyle(card).paddingRight);
-        card.style.minWidth = (navIcons.offsetWidth + cardPadding) + 'px';
-      } else {
-        card.style.minWidth = '';
-      }
-    }
+    // ── Card min-width: handled via CSS at 782px breakpoint ──
+    function updateMinWidth() {}
 
     // ── Run after fonts are loaded for accurate measurement ──
     document.fonts.ready.then(() => {
