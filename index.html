@@ -15,7 +15,7 @@
       display: flex;
       align-items: center;
       justify-content: center;
-      padding: 40px 20px;
+      padding: 40px 120px;
       background-color: #e8e8e8;
       background-image: radial-gradient(circle, #b0b0b0 1px, transparent 1px);
       background-size: 20px 20px;
@@ -26,7 +26,6 @@
       background: rgba(255, 255, 255, 0.4);
       border-radius: 16px;
       width: 100%;
-      max-width: 688px;
       padding: 60px;
       display: flex;
       flex-direction: column;
@@ -430,6 +429,13 @@
     });
     panelContainer.style.height = '';
     panelContainer.style.overflow = '';
+
+    // ── Set card min-width from nav-icons row ──
+    const card = document.querySelector('.card');
+    const navIcons = document.querySelector('.nav-icons');
+    const cardPadding = parseFloat(getComputedStyle(card).paddingLeft)
+                      + parseFloat(getComputedStyle(card).paddingRight);
+    card.style.minWidth = (navIcons.offsetWidth + cardPadding) + 'px';
 
     // ── Icon state helper ──
     function applyState(btn, state) {
