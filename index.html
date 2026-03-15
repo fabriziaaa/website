@@ -63,6 +63,12 @@
       width: 80px;
       height: 80px;
       transform: rotate(-5deg);
+      transition: transform 0.35s cubic-bezier(0.34, 1.56, 0.64, 1);
+      cursor: default;
+    }
+
+    .avatar-wrap:hover {
+      transform: rotate(0deg) scale(1.06);
     }
 
     .avatar-wrap img {
