@@ -242,13 +242,6 @@
       height: var(--panel-max-height);
     }
 
-    /* On desktop: always open — height driven by CSS variable */
-    @media (min-width: 782px) {
-      .panel-container {
-        height: var(--panel-max-height);
-        overflow: hidden;
-      }
-    }
 
     /* ── SECTION PANELS ── */
     .section-panel {
@@ -632,18 +625,13 @@
       });
       btn.addEventListener('click', () => {
         const isActive = btn.classList.contains('active');
-        if (isDesktop()) {
-          // On desktop: always show a panel, no deselect
-          activate(btn);
+        if (isActive) {
+          // Deselect: hide panel on both mobile and desktop
+          buttons.forEach(b => { b.classList.remove('active'); applyState(b, 'default'); });
+          panels.forEach(p => p.classList.remove('visible'));
+          panelContainer.classList.remove('open');
         } else {
-          // On mobile: toggle open/close
-          if (isActive) {
-            buttons.forEach(b => { b.classList.remove('active'); applyState(b, 'default'); });
-            panels.forEach(p => p.classList.remove('visible'));
-            panelContainer.classList.remove('open');
-          } else {
-            activate(btn);
-          }
+          activate(btn);
         }
       });
     });
