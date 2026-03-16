@@ -6,7 +6,7 @@
   <title>Fab — Senior Product Designer</title>
   <link rel="preconnect" href="https://fonts.googleapis.com" />
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-  <link href="https://fonts.googleapis.com/css2?family=Roboto+Mono:wght@400;700&display=swap" rel="stylesheet" />
+  <link href="https://fonts.googleapis.com/css2?family=Azeret+Mono:wght@400;700&display=swap" rel="stylesheet" />
   <style>
     *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
 
@@ -19,7 +19,7 @@
       background-color: #e8e8e8;
       background-image: radial-gradient(circle, #b0b0b0 1px, transparent 1px);
       background-size: 20px 20px;
-      font-family: 'Roboto Mono', monospace;
+      font-family: 'Azeret Mono', monospace;
     }
 
     .card {
@@ -39,11 +39,48 @@
 
     @media (min-width: 782px) {
       body { padding: 40px 24px; }
-      .card { padding: 60px; max-width: 704px; }
+      .card { padding: 60px; max-width: 1080px; }
     }
 
     @media (min-width: 1100px) {
       body { padding: 40px 120px; }
+    }
+
+    /* ── MAIN LAYOUT ── */
+    .main {
+      display: flex;
+      flex-direction: column;
+      gap: 32px;
+    }
+
+    .content-col {
+      display: flex;
+      flex-direction: column;
+      gap: 32px;
+    }
+
+    @media (min-width: 640px) {
+      .main { gap: 40px; }
+      .content-col { gap: 40px; }
+    }
+
+    @media (min-width: 782px) {
+      .main {
+        display: grid;
+        grid-template-columns: 1fr auto;
+        grid-template-rows: auto 1fr;
+        grid-template-areas:
+          "content nav"
+          "panel   nav";
+        column-gap: 40px;
+        row-gap: 40px;
+      }
+      .content-col   { grid-area: content; }
+      .panel-container { grid-area: panel; }
+    }
+
+    @media (min-width: 1100px) {
+      .main { column-gap: 80px; }
     }
 
     /* HERO */
@@ -131,8 +168,8 @@
       line-height: 1.7;
     }
 
-    /* ── NAV ICONS ── */
-    .nav-icons {
+    /* ── NAV COLUMN ── */
+    .nav-col {
       display: flex;
       flex-wrap: wrap;
       gap: 10px;
@@ -140,11 +177,18 @@
     }
 
     @media (min-width: 640px) {
-      .nav-icons { gap: 12px; }
+      .nav-col { gap: 12px; }
     }
 
     @media (min-width: 782px) {
-      .nav-icons { flex-wrap: nowrap; gap: 14px; }
+      .nav-col {
+        grid-area: nav;
+        flex-direction: column;
+        flex-wrap: nowrap;
+        gap: 24px;
+        align-items: center;
+        justify-content: flex-start;
+      }
     }
 
     .nav-icon-btn {
@@ -163,7 +207,7 @@
       pointer-events: none;
     }
 
-    /* ── Nav icon sizes — mobile-first (≈65% of desktop) ── */
+    /* ── Nav icon sizes — mobile-first ── */
     .icon-ath    { width: 65px; }
     .icon-est    { width: 66px; }
     .icon-write  { width: 98px; }
@@ -179,23 +223,25 @@
     }
 
     @media (min-width: 782px) {
-      .icon-ath    { width: 87px; }
-      .icon-est    { width: 89px; }
-      .icon-write  { width: 130px; }
-      .icon-onair  { width: 122px; }
-      .icon-folder { width: 99px; }
+      .icon-ath    { width: 100px; }
+      .icon-est    { width: 102px; }
+      .icon-write  { width: 150px; }
+      .icon-onair  { width: 140px; }
+      .icon-folder { width: 114px; }
     }
 
-    /* ── PANEL CONTAINER (viewport) ── */
+    /* ── PANEL CONTAINER ── */
     .panel-container {
       position: relative;
       overflow: hidden;
       height: 0;
       transition: height 0.35s cubic-bezier(0.4, 0, 0.2, 1);
     }
+
     .panel-container.open {
       height: var(--panel-max-height);
     }
+
 
     /* ── SECTION PANELS ── */
     .section-panel {
@@ -209,6 +255,7 @@
       pointer-events: none;
       transition: opacity 0.25s ease 0.05s, transform 0.28s ease 0.05s;
     }
+
     .section-panel.visible {
       opacity: 1;
       transform: translateY(0);
@@ -225,12 +272,13 @@
     .panel-text { font-size: 15px; color: #000; line-height: 24px; }
 
     .cv-list { display: flex; flex-direction: column; gap: 16px; }
-    .cv-row  { display: flex; gap: 16px; align-items: center; }
+    .cv-row  { display: flex; gap: 16px; align-items: center; flex-wrap: wrap; }
     .cv-role    { font-size: 14px; color: #000; }
     .cv-company { font-size: 14px; font-weight: 700; color: #000; }
-    .cv-label   { background: #fff; border-radius: 4px; padding: 5px 8px 7px; font-size: 12px; color: #000; white-space: nowrap; }
+    .cv-label   { font-size: 14px; color: #000; }
 
     @media (min-width: 782px) {
+      .cv-row     { flex-wrap: nowrap; }
       .cv-role    { white-space: nowrap; }
       .cv-company { white-space: nowrap; }
     }
@@ -239,7 +287,8 @@
     .write-header img { width: 24px; height: 24px; }
     .write-header strong { font-weight: 700; }
 
-    .articles-label { display: inline-flex; gap: 4px; align-items: center; background: #fff; border-radius: 4px; padding: 5px 8px 7px; font-size: 12px; color: #000; margin-bottom: 8px; }
+    .articles-label { display: inline-flex; gap: 4px; align-items: center; background: #fff; border-radius: 4px; padding: 5px 8px 7px; font-size: 12px; color: #000; margin-bottom: 8px; text-decoration: none; transition: transform 0.2s ease, box-shadow 0.2s ease; }
+    .articles-label:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(0, 255, 55, 0.2); }
     .articles-label img { width: 16px; height: 16px; }
 
     .article-link { display: flex; gap: 4px; align-items: center; font-size: 15px; color: #000; line-height: 24px; text-decoration: none; margin-bottom: 4px; }
@@ -252,18 +301,14 @@
       .speak-content { flex-direction: row; gap: 40px; align-items: center; }
       .speak-img { width: 262px; height: 147px; flex-shrink: 0; }
     }
+
     .speak-info { display: flex; flex-direction: column; gap: 16px; }
     .speak-title { font-size: 15px; color: #000; }
     .speak-venue { display: flex; gap: 4px; align-items: center; font-size: 15px; color: #000; }
     .speak-venue img { width: 24px; height: 24px; }
-    .vod-btn { display: inline-flex; gap: 4px; align-items: center; background: #fff; border-radius: 4px; padding: 5px 8px 7px; font-size: 12px; color: #000; text-decoration: none; }
+    .vod-btn { display: inline-flex; gap: 4px; align-items: center; align-self: flex-start; background: #fff; border-radius: 4px; padding: 5px 8px 7px; font-size: 12px; color: #000; text-decoration: none; transition: transform 0.2s ease, box-shadow 0.2s ease; }
+    .vod-btn:hover { transform: translateY(-2px); box-shadow: 0 4px 12px rgba(255, 0, 162, 0.2); }
     .vod-btn img { width: 16px; height: 16px; }
-
-    /* cv-row wraps on narrow screens */
-    .cv-row { flex-wrap: wrap; }
-    @media (min-width: 782px) {
-      .cv-row { flex-wrap: nowrap; }
-    }
 
     /* ── CARD FOOTER ── */
     .card-footer {
@@ -271,8 +316,6 @@
       gap: 40px;
       align-items: center;
       justify-content: center;
-      margin-top: auto;
-      padding-top: 0;
     }
 
     .footer-item {
@@ -303,189 +346,196 @@
 
   <div class="card">
 
-    <!-- HERO -->
-    <div class="hero">
-      <div class="avatar-wrap">
-        <img src="assets/fab2.png" alt="Fab" />
-      </div>
-      <div class="hero-details">
-        <div>
-          <div class="hero-name-row">
-            <span>Hey there</span>
-            <img src="assets/wave.svg" alt="" />
-            <span>I'm Fab</span>
+    <div class="main">
+
+      <!-- LEFT: content column -->
+      <div class="content-col">
+
+        <!-- HERO -->
+        <div class="hero">
+          <div class="avatar-wrap">
+            <img src="assets/fab2.png" alt="Fab" />
           </div>
-          <div class="hero-title">Senior Product Designer</div>
+          <div class="hero-details">
+            <div>
+              <div class="hero-name-row">
+                <span>Hey there</span>
+                <img src="assets/wave.svg" alt="" />
+                <span>I'm Fab</span>
+              </div>
+              <div class="hero-title">Senior Product Designer</div>
+            </div>
+            <div class="hero-divider"></div>
+            <p class="hero-meta">currently @ Deel / working on hr tools / since '24</p>
+          </div>
         </div>
-        <div class="hero-divider"></div>
-        <p class="hero-meta">currently @ Deel / working on hr tools / since '24</p>
-      </div>
-    </div>
 
-    <!-- BIO -->
-    <div class="bio">
-      <p>I have a knack for solving complex problems + a passion for creating digital products with simplicity and purpose</p>
-      <br />
-      <p>My background in cognitive psychology drives my curiosity beyond the screen as well — I love exploring the complexity of the human mind and the broader impact design can have on how people think, feel, and interact with the world</p>
-    </div>
-
-    <!-- NAV ICONS -->
-    <div class="nav-icons">
-
-      <!-- ATH -->
-      <button class="nav-icon-btn icon-ath" data-section="ath" title="Athens">
-        <img src="assets/ath-default.svg"
-          data-default="assets/ath-default.svg"
-          data-hover="assets/ath-hover.svg"
-          data-selected="assets/ath-selected.svg"
-          alt="Athens" />
-      </button>
-
-      <!-- EST -->
-      <button class="nav-icon-btn icon-est" data-section="est" title="Est. 2017">
-        <img src="assets/est-default.svg"
-          data-default="assets/est-default.svg"
-          data-hover="assets/est-hover.svg"
-          data-selected="assets/est-selected.svg"
-          alt="Est. 2017" />
-      </button>
-
-      <!-- WRITE -->
-      <button class="nav-icon-btn icon-write" data-section="write" title="Writing">
-        <img src="assets/write-default.svg"
-          data-default="assets/write-default.svg"
-          data-hover="assets/write-hover.svg"
-          data-selected="assets/write-selected.svg"
-          alt="Writing" />
-      </button>
-
-      <!-- ON AIR -->
-      <button class="nav-icon-btn icon-onair" data-section="onair" title="Speaking">
-        <img src="assets/onair-default.svg"
-          data-default="assets/onair-default.svg"
-          data-hover="assets/onair-hover.svg"
-          data-selected="assets/onair-selected.svg"
-          alt="On Air" />
-      </button>
-
-      <!-- FOLDER / PORTFOLIO -->
-      <button class="nav-icon-btn icon-folder" data-section="portfolio" title="Portfolio">
-        <img src="assets/folder-default.svg"
-          data-default="assets/folder-default.svg"
-          data-hover="assets/folder-hover.svg"
-          data-selected="assets/folder-selected.svg"
-          alt="Portfolio" />
-      </button>
-
-    </div>
-
-    <!-- PANEL CONTAINER -->
-    <div class="panel-container" id="panel-container">
-
-    <!-- SECTION: ATH -->
-    <div class="section-panel panel-ath" id="panel-ath">
-      <div class="panel-text">
-        <p>Working remotely from Athens 🇬🇷</p>
-        <p>Previously London 🇬🇧</p>
-        <p>Originally from Napoli 🇮🇹</p>
-      </div>
-    </div>
-
-    <!-- SECTION: EST -->
-    <div class="section-panel panel-est" id="panel-est">
-      <div class="cv-list">
-        <div class="cv-row">
-          <span class="cv-role">Senior product designer →</span>
-          <span class="cv-company">@Deel</span>
-          <span class="cv-label">nov <sup>2024</sup> - present</span>
+        <!-- BIO -->
+        <div class="bio">
+          <p>I have a knack for solving complex problems + a passion for creating digital products with simplicity and purpose</p>
+          <br />
+          <p>My background in cognitive psychology drives my curiosity beyond the screen as well — I love exploring the complexity of the human mind and the broader impact design can have on how people think, feel, and interact with the world</p>
         </div>
-        <div class="cv-row">
-          <span class="cv-role">Product designer →</span>
-          <span class="cv-company">@Deel</span>
-          <span class="cv-label">jan - nov <sup>2024</sup></span>
-        </div>
-        <div class="cv-row">
-          <span class="cv-role">Senior product designer →</span>
-          <span class="cv-company">@Farfetch</span>
-          <span class="cv-label">2022 - 2023</span>
-        </div>
-        <div class="cv-row">
-          <span class="cv-role">Product designer →</span>
-          <span class="cv-company">@Typeform</span>
-          <span class="cv-label">2020 - 2022</span>
-        </div>
-        <div class="cv-row">
-          <span class="cv-role">UX designer →</span>
-          <span class="cv-company">@Miro</span>
-          <span class="cv-label">2018 - 2020</span>
-        </div>
-      </div>
-    </div>
 
-    <!-- SECTION: WRITE -->
-    <div class="section-panel panel-write" id="panel-write">
-      <div class="write-header">
-        <span>Find me on</span>
-        <img src="assets/medium-icon.svg" alt="Medium" />
-        <span>Medium <strong>@fabriziaa</strong></span>
-      </div>
-      <div>
-        <div class="articles-label">
-          latest articles
-          <img src="assets/arrow-out.svg" alt="" />
-        </div>
-        <a class="article-link" href="https://medium.com/@fabriziaa" target="_blank" rel="noopener">
-          🧃 The design of shallow thinking
-          <img src="assets/arrow-out-sm.svg" alt="" />
-        </a>
-        <a class="article-link" href="https://medium.com/@fabriziaa" target="_blank" rel="noopener">
-          🎱 Building trust in opaque systems
-          <img src="assets/arrow-out-sm.svg" alt="" />
-        </a>
-      </div>
-    </div>
+      </div><!-- /.content-col -->
 
-    <!-- SECTION: ON AIR -->
-    <div class="section-panel panel-onair" id="panel-onair">
-      <div class="speak-content">
-        <img class="speak-img" src="assets/image6.png" alt="Friends of Figma World Tour 2025" />
-        <div class="speak-info">
-          <div>
-            <p class="speak-title">Speaker at</p>
-            <div class="speak-venue">
-              <span>Friends of</span>
-              <img src="assets/figma-icon.svg" alt="Figma" />
-              <span>igma World Tour 2025</span>
+      <!-- RIGHT: nav icons (vertical on desktop, horizontal on mobile) -->
+      <nav class="nav-col">
+
+        <button class="nav-icon-btn icon-ath" data-section="ath" title="Athens">
+          <img src="assets/ath-default.svg"
+            data-default="assets/ath-default.svg"
+            data-hover="assets/ath-hover.svg"
+            data-selected="assets/ath-selected.svg"
+            alt="Athens" />
+        </button>
+
+        <button class="nav-icon-btn icon-est" data-section="est" title="Est. 2017">
+          <img src="assets/est-default.svg"
+            data-default="assets/est-default.svg"
+            data-hover="assets/est-hover.svg"
+            data-selected="assets/est-selected.svg"
+            alt="Est. 2017" />
+        </button>
+
+        <button class="nav-icon-btn icon-write" data-section="write" title="Writing">
+          <img src="assets/write-default.svg"
+            data-default="assets/write-default.svg"
+            data-hover="assets/write-hover.svg"
+            data-selected="assets/write-selected.svg"
+            alt="Writing" />
+        </button>
+
+        <button class="nav-icon-btn icon-onair" data-section="onair" title="Speaking">
+          <img src="assets/onair-default.svg"
+            data-default="assets/onair-default.svg"
+            data-hover="assets/onair-hover.svg"
+            data-selected="assets/onair-selected.svg"
+            alt="On Air" />
+        </button>
+
+        <button class="nav-icon-btn icon-folder" data-section="portfolio" title="Portfolio">
+          <img src="assets/folder-default.svg"
+            data-default="assets/folder-default.svg"
+            data-hover="assets/folder-hover.svg"
+            data-selected="assets/folder-selected.svg"
+            alt="Portfolio" />
+        </button>
+
+      </nav><!-- /.nav-col -->
+
+      <!-- PANEL CONTAINER (below content on desktop grid) -->
+      <div class="panel-container" id="panel-container">
+
+        <div class="section-panel panel-ath" id="panel-ath">
+          <div class="panel-text">
+            <p>Working remotely from Athens 🇬🇷</p>
+            <p>Previously London 🇬🇧</p>
+            <p>Originally from Napoli 🇮🇹</p>
+          </div>
+        </div>
+
+        <div class="section-panel panel-est" id="panel-est">
+          <div class="cv-list">
+            <div class="cv-row">
+              <span class="cv-role">senior product designer →</span>
+              <span class="cv-company">@deel</span>
+              <span class="cv-role">→</span>
+              <span class="cv-label">oct 2025 – present</span>
+            </div>
+            <div class="cv-row">
+              <span class="cv-role">lecturer (master in ux/ui) →</span>
+              <span class="cv-company">@start2impact</span>
+              <span class="cv-role">→</span>
+              <span class="cv-label">sep 2025 – present</span>
+            </div>
+            <div class="cv-row">
+              <span class="cv-role">head of design →</span>
+              <span class="cv-company">@moveo.ai</span>
+              <span class="cv-role">→</span>
+              <span class="cv-label">jan 2024 – dec 2024</span>
+            </div>
+            <div class="cv-row">
+              <span class="cv-role">lead product designer →</span>
+              <span class="cv-company">@sophic</span>
+              <span class="cv-role">→</span>
+              <span class="cv-label">dec 2023 – dec 2024</span>
+            </div>
+            <div class="cv-row">
+              <span class="cv-role">senior product designer →</span>
+              <span class="cv-company">@relive</span>
+              <span class="cv-role">→</span>
+              <span class="cv-label">jun 2022 – dec 2023</span>
+            </div>
+            <div class="cv-row">
+              <span class="cv-label">[...]</span>
             </div>
           </div>
-          <a class="vod-btn" href="#" target="_blank" rel="noopener">
-            watch VOD <img src="assets/arrow-out.svg" alt="" />
-          </a>
         </div>
-      </div>
-    </div>
 
-    <!-- SECTION: PORTFOLIO -->
-    <div class="section-panel panel-portfolio" id="panel-portfolio">
-      <div class="speak-content">
-        <img class="speak-img" src="assets/image6.png" alt="Portfolio" />
-        <div class="speak-info">
+        <div class="section-panel panel-write" id="panel-write">
+          <div class="write-header">
+            <span>Find me on</span>
+            <img src="assets/medium-icon.svg" alt="Medium" />
+            <span>Medium <strong>@fabriziaa</strong></span>
+          </div>
           <div>
-            <p class="speak-title">Speaker at</p>
-            <div class="speak-venue">
-              <span>Friends of</span>
-              <img src="assets/figma-icon.svg" alt="Figma" />
-              <span>igma World Tour 2025</span>
+            <a class="articles-label" href="https://medium.com/@fabriziaa" target="_blank" rel="noopener">
+              latest articles
+              <img src="assets/arrow-out.svg" alt="" />
+            </a>
+            <a class="article-link" href="https://medium.com/@fabriziaa" target="_blank" rel="noopener">
+              🧃 The design of shallow thinking
+              <img src="assets/arrow-out-sm.svg" alt="" />
+            </a>
+            <a class="article-link" href="https://medium.com/@fabriziaa" target="_blank" rel="noopener">
+              🎱 Building trust in opaque systems
+              <img src="assets/arrow-out-sm.svg" alt="" />
+            </a>
+          </div>
+        </div>
+
+        <div class="section-panel panel-onair" id="panel-onair">
+          <div class="speak-content">
+            <img class="speak-img" src="assets/image6.png" alt="Friends of Figma World Tour 2025" />
+            <div class="speak-info">
+              <div>
+                <p class="speak-title">Speaker at</p>
+                <div class="speak-venue">
+                  <span>Friends of</span>
+                  <img src="assets/figma-icon.svg" alt="Figma" />
+                  <span>igma World Tour 2025</span>
+                </div>
+              </div>
+              <a class="vod-btn" href="https://youtu.be/okll8pwpqbs?si=Subsb3EiU9JJqw_P" target="_blank" rel="noopener">
+                watch recording <img src="assets/arrow-out.svg" alt="" />
+              </a>
             </div>
           </div>
-          <a class="vod-btn" href="#" target="_blank" rel="noopener">
-            watch VOD <img src="assets/arrow-out.svg" alt="" />
-          </a>
         </div>
-      </div>
-    </div>
 
-    </div><!-- /.panel-container -->
+        <div class="section-panel panel-portfolio" id="panel-portfolio">
+          <div class="speak-content">
+            <img class="speak-img" src="assets/image6.png" alt="Portfolio" />
+            <div class="speak-info">
+              <div>
+                <p class="speak-title">Speaker at</p>
+                <div class="speak-venue">
+                  <span>Friends of</span>
+                  <img src="assets/figma-icon.svg" alt="Figma" />
+                  <span>igma World Tour 2025</span>
+                </div>
+              </div>
+              <a class="vod-btn" href="#" target="_blank" rel="noopener">
+                watch recording <img src="assets/arrow-out.svg" alt="" />
+              </a>
+            </div>
+          </div>
+        </div>
+
+      </div><!-- /.panel-container -->
+
+    </div><!-- /.main -->
 
     <!-- FOOTER -->
     <div class="card-footer">
@@ -512,13 +562,11 @@
     const panelContainer = document.getElementById('panel-container');
     const panels = document.querySelectorAll('.section-panel');
     const card = document.querySelector('.card');
-    const navIcons = document.querySelector('.nav-icons');
+
+    function isDesktop() { return window.innerWidth >= 782; }
 
     // ── Measure tallest panel and lock container height ──
     function remeasurePanels() {
-      const wasOpen = panelContainer.classList.contains('open');
-
-      // Suppress transition during measurement
       panelContainer.style.transition = 'none';
       panelContainer.style.height = 'auto';
       panelContainer.style.overflow = 'visible';
@@ -540,31 +588,20 @@
       panelContainer.style.height = '';
       panelContainer.style.overflow = '';
 
-      // Re-enable transition after next frame
-      requestAnimationFrame(() => {
-        panelContainer.style.transition = '';
-      });
+      requestAnimationFrame(() => { panelContainer.style.transition = ''; });
     }
 
-    // ── Card min-width: handled via CSS at 782px breakpoint ──
-    function updateMinWidth() {}
-
-    // ── Run after fonts are loaded for accurate measurement ──
-    document.fonts.ready.then(() => {
-      remeasurePanels();
-      updateMinWidth();
-    });
-
-    // ── Re-measure on resize ──
-    let resizeTimer;
-    const ro = new ResizeObserver(() => {
-      clearTimeout(resizeTimer);
-      resizeTimer = setTimeout(() => {
-        remeasurePanels();
-        updateMinWidth();
-      }, 50);
-    });
-    ro.observe(card);
+    // ── Activate a button + panel ──
+    function activate(btn) {
+      const section = btn.dataset.section;
+      const panel = document.getElementById('panel-' + section);
+      buttons.forEach(b => { b.classList.remove('active'); applyState(b, 'default'); });
+      panels.forEach(p => p.classList.remove('visible'));
+      btn.classList.add('active');
+      applyState(btn, 'selected');
+      if (panel) panel.classList.add('visible');
+      panelContainer.classList.add('open');
+    }
 
     // ── Icon state helper ──
     function applyState(btn, state) {
@@ -572,6 +609,21 @@
         img.src = img.dataset[state] || img.dataset.default;
       });
     }
+
+    // ── Init: activate ATH by default on desktop ──
+    document.fonts.ready.then(() => {
+      remeasurePanels();
+      if (isDesktop()) {
+        activate(document.querySelector('[data-section="ath"]'));
+      }
+    });
+
+    // ── Re-measure on resize ──
+    let resizeTimer;
+    new ResizeObserver(() => {
+      clearTimeout(resizeTimer);
+      resizeTimer = setTimeout(remeasurePanels, 50);
+    }).observe(card);
 
     // ── Event listeners ──
     buttons.forEach(btn => {
@@ -581,22 +633,15 @@
       btn.addEventListener('mouseleave', () => {
         if (!btn.classList.contains('active')) applyState(btn, 'default');
       });
-
       btn.addEventListener('click', () => {
-        const section = btn.dataset.section;
-        const panel = document.getElementById('panel-' + section);
         const isActive = btn.classList.contains('active');
-
-        buttons.forEach(b => { b.classList.remove('active'); applyState(b, 'default'); });
-        panels.forEach(p => p.classList.remove('visible'));
-
-        if (!isActive) {
-          btn.classList.add('active');
-          applyState(btn, 'selected');
-          if (panel) panel.classList.add('visible');
-          panelContainer.classList.add('open');
-        } else {
+        if (isActive) {
+          // Deselect: hide panel on both mobile and desktop
+          buttons.forEach(b => { b.classList.remove('active'); applyState(b, 'default'); });
+          panels.forEach(p => p.classList.remove('visible'));
           panelContainer.classList.remove('open');
+        } else {
+          activate(btn);
         }
       });
     });
